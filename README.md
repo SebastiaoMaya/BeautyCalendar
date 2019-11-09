@@ -32,7 +32,7 @@ This project lets the user play the "mobile flashcards" on the mobile phone: cre
 
 ### EntryType AsyncStorage Structure
 
-- key: 'BeautyCalendar:entryType'
+- key: 'BeautyCalendar:entryTypes'
 
 <pre>
 {

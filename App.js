@@ -1,19 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Constants from 'expo-constants';
+import React, { Component } from 'react';
+import { StatusBar, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import History from './components/history/History';
+import middleware from './middleware';
+import reducer from './reducers';
+import { pink } from './utils/colors';
+import { setLocalNotification } from './utils/notifications_api';
 
-export default function App() {
+const BeautyCalendarStatusBar = ({ backgroundColor, ...props }) => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return (
+      <Provider store={createStore(reducer, middleware)}>
+        <View style={{ flex: 1 }}>
+          <BeautyCalendarStatusBar
+            backgroundColor={pink}
+            barStyle='light-content'
+          />
+          <History />
+        </View>
+      </Provider>
+    );
+  }
+}
