@@ -7,18 +7,20 @@ const MetricCard = ({ metrics, entryTypes }) => {
   return (
     <View>
       {Object.keys(metrics).map(metric => {
-        const { displayName } = entryTypes[metric];
+        if (metric !== 'key') {
+          const { displayName } = entryTypes[metric];
 
-        return (
-          <View style={styles.metric} key={metric}>
-            <View>
-              <Text style={{ fontSize: 20 }}>{displayName}</Text>
-              <Text style={{ fontSize: 16, color: gray }}>
-                {metrics[metric]}
-              </Text>
+          return (
+            <View style={styles.metric} key={metric}>
+              <View>
+                <Text style={{ fontSize: 20 }}>{displayName}</Text>
+                <Text style={{ fontSize: 16, color: gray }}>
+                  {metrics[metric]}
+                </Text>
+              </View>
             </View>
-          </View>
-        );
+          );
+        }
       })}
     </View>
   );

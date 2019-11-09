@@ -37,6 +37,7 @@ function setDummyData() {
       getRandomNumber(3) % 2 === 0
         ? [
             {
+              key: strTime,
               linha: getRandomNumber(50),
               pedicure: getRandomNumber(50),
               massagem_relaxamento: getRandomNumber(50)

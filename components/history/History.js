@@ -13,6 +13,7 @@ import { receiveEntries } from '../../actions/entries';
 import { receiveEntryTypes } from '../../actions/entryTypes';
 import { fetchDatabaseResults } from '../../utils/api';
 import { white } from '../../utils/colors';
+import { timeToString } from '../../utils/helpers';
 import MetricCard from './MetricCard';
 
 class History extends Component {
@@ -41,17 +42,11 @@ class History extends Component {
     return r1.name !== r2.name;
   };
 
-  timeToString(time) {
-    const date = new Date(time);
-    return date.toISOString().split('T')[0];
-  }
-
   renderItem = item => (
     <View style={styles.item}>
       <TouchableOpacity
         onPress={() => {
-          //this.props.navigation.navigate('EntryDetail', { entryId: key });
-          console.log('clicked');
+          this.props.navigation.navigate('EntryDetail', { entryId: item.key });
         }}
       >
         <MetricCard metrics={item} />
@@ -59,15 +54,25 @@ class History extends Component {
     </View>
   );
 
-  renderEmptyDate() {
+  renderEmptyDate = date => {
+    const emptyDate = timeToString(date);
+
     return (
       <View style={styles.item}>
-        <Text style={styles.noDataText}>
-          You didn't log any data on this day
-        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('EntryDetail', {
+              entryId: emptyDate
+            });
+          }}
+        >
+          <Text style={styles.noDataText}>
+            You didn't log any data on this day
+          </Text>
+        </TouchableOpacity>
       </View>
     );
-  }
+  };
 
   render() {
     const { entries } = this.props;

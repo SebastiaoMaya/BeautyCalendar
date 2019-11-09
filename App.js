@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import History from './components/history/History';
+import Navigator from './components/navigators/Navigator';
 import middleware from './middleware';
 import reducer from './reducers';
 import { pink } from './utils/colors';
@@ -30,7 +30,7 @@ export default class App extends Component {
             backgroundColor={pink}
             barStyle='light-content'
           />
-          <History />
+          <Navigator />
         </View>
       </Provider>
     );
