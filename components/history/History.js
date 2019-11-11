@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { AppLoading } from 'expo';
 import React, { Component } from 'react';
 import {

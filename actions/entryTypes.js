@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 export const RECEIVE_ENTRY_TYPES = 'RECEIVE_ENTRY_TYPES';
 export const ADD_ENTRY_TYPE = 'ADD_ENTRY_TYPE';
 

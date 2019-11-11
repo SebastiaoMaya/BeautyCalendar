@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 const logger = store => next => action => {
   console.group(action.type);
   console.log('The action:', action);

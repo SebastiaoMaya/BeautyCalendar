@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { lightBlue } from '../../utils/colors';

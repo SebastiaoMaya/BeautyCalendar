@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { ADD_ENTRY_TYPE, RECEIVE_ENTRY_TYPES } from '../actions/entryTypes';
 
 const entryTypes = (state = {}, action) => {

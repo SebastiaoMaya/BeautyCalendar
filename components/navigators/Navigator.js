@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Platform } from 'react-native';

@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import Constants from 'expo-constants';
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';

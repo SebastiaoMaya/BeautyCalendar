@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { NOTIFICATION_BODY } from './constants';
 
 export function timeToString(time = Date.now()) {

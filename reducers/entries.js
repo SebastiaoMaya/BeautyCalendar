@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { ADD_ENTRY, RECEIVE_ENTRIES } from '../actions/entries';
 
 const entries = (state = {}, action) => {

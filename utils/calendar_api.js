@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { AsyncStorage } from 'react-native';
 import { getRandomNumber, timeToString } from './helpers';
 

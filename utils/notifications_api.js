@@ -1,8 +1,12 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import { AsyncStorage } from 'react-native';
-import * as Constants from './constants';
 import { getHoursAndMinutesFromString } from '../utils/helpers';
+import * as Constants from './constants';
 
 const NOTIFICATIONS_KEY = 'BeautyCalendar:notifications';
 

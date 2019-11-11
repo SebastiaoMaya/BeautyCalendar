@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import { AsyncStorage } from 'react-native';
 
 export const ENTRY_TYPES_STORAGE_KEY = 'BeautyCalendar:entryTypes';

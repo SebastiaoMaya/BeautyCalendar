@@ -1,3 +1,7 @@
+/**
+ * Copyright 2019, Sebastião Maya, All rights reserved.
+ */
+
 import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { lightBlue, white } from '../../utils/colors';
