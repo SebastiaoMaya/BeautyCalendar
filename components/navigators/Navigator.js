@@ -83,6 +83,7 @@ const HistoryStackNavigator = createStackNavigator(
         headerTitle: 'Entry Details'
       }
     },
+    AddEntry,
     TabNavigator
   },
   {

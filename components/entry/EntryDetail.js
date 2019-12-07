@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry } from '../../utils/calendar_api';
@@ -36,29 +36,19 @@ class EntryDetail extends Component {
     return nextProps.metrics !== null;
   }
 
-  renderEmptyEntry = () => {
-    return (
-      <View style={styles.container}>
-        <Text>teste</Text>
-      </View>
-    );
-  };
-
-  renderEntry = metrics => {
-    return (
-      <View style={styles.container}>
-        <MetricCard metrics={metrics} />
-        <TextButton onPress={this.reset} style={{ margin: 20 }}>
-          Reset
-        </TextButton>
-      </View>
-    );
-  };
-
   render() {
     const { metrics } = this.props;
 
-    return metrics ? this.renderEntry(metrics) : this.renderEmptyEntry();
+    if (metrics) {
+      return (
+        <View style={styles.container}>
+          <MetricCard metrics={metrics} />
+          <TextButton onPress={this.reset} style={{ margin: 20 }}>
+            Reset
+          </TextButton>
+        </View>
+      );
+    }
   }
 }
 

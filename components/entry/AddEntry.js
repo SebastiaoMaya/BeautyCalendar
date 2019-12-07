@@ -6,7 +6,7 @@ import { Platform } from '@unimodules/core';
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry, submitEntry } from '../../utils/calendar_api';
@@ -78,9 +78,10 @@ class AddEntry extends Component {
   };
 
   submit = () => {
-    const key = timeToString();
+    const { dispatch, entryTypes, date } = this.props;
+
+    const key = date ? date : timeToString();
     const entry = this.state;
-    const { dispatch, entryTypes } = this.props;
 
     //Update Redux
     dispatch(
@@ -100,8 +101,8 @@ class AddEntry extends Component {
   };
 
   reset = () => {
-    const key = timeToString();
-    const { dispatch } = this.props;
+    const { dispatch, date } = this.props;
+    const key = date ? date : timeToString();
 
     //Update Redux
     dispatch(
@@ -125,30 +126,31 @@ class AddEntry extends Component {
   };
 
   render() {
-    const { entryTypes } = this.props;
-
-    if (this.props.alreadyLogged) {
-      return (
-        <View style={styles.center}>
-          <Text>You already logged your information for today</Text>
-          <TextButton onPress={this.reset} style={{ padding: 10 }}>
-            Reset
-          </TextButton>
-        </View>
-      );
-    }
+    const { entryTypes, date } = this.props;
 
     const entryTypesArray = Object.keys(entryTypes).map(key => ({
       key,
       ...entryTypes[key]
     }));
+
+    let dateToRecord = date;
+
+    if (!date) {
+      dateToRecord = timeToString();
+    }
+
     return (
       <View style={styles.container}>
-        <Text style={styles.activitiesHeader}>Activities</Text>
+        <Text style={styles.activitiesHeader}>
+          Activities for {dateToRecord}
+        </Text>
         <View style={styles.entriesContainer}>
           <FlatList data={entryTypesArray} renderItem={this.renderEntryType} />
         </View>
         <SubmitBtn onPress={this.submit} />
+        <TextButton onPress={this.reset} style={{ padding: 10 }}>
+          Reset
+        </TextButton>
       </View>
     );
   }
@@ -206,13 +208,13 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ entries, entryTypes }) => {
-  const key = timeToString();
+const mapStateToProps = ({ entryTypes }, { navigation }) => {
+  const { date } = navigation.state.params;
 
   return {
-    alreadyLogged: entries[key] && typeof entries[key].today === 'undefined',
-    entryTypes
+    entryTypes,
+    date
   };
 };
 
-export default connect(mapStateToProps)(AddEntry);
+export default withNavigation(connect(mapStateToProps)(AddEntry));
