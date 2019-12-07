@@ -67,12 +67,11 @@ class AddEntryType extends Component {
   };
 
   handleTextChange = (text, name) => {
-    const { validPercentage, validPrice } = this.state;
-    console.log('validPerc: ' + validPercentage);
-    console.log('validPrice: ' + validPrice);
-    this.setState(() => ({
+    this.setState(previousState => ({
+      ...previousState,
       [name]: text,
-      validActivityData: text !== '' && validPercentage && validPrice
+      validActivityData:
+        text !== '' && previousState.validPercentage && previousState.validPrice
     }));
   };
 
@@ -98,7 +97,12 @@ class AddEntryType extends Component {
           onChangeText={text => this.handleTextChange(text, 'priceInput')}
           placeholder='Enter the price'
           pattern={['^[1-9]\\d{0,9}(,\\d{0,2})?$']}
-          onValidation={isValid => this.setState({ validPrice: isValid })}
+          onValidation={isValid =>
+            this.setState(previousState => ({
+              ...previousState,
+              validPrice: isValid
+            }))
+          }
           keyboardType={'numeric'}
           style={styles.inputStyle}
         />
@@ -109,7 +113,12 @@ class AddEntryType extends Component {
           pattern={[
             '(^100(\\,0{1,2})?$)|(^([1-9]([0-9])?|0)(\\,[0-9]{1,2})?$)'
           ]}
-          onValidation={isValid => this.setState({ validPercentage: isValid })}
+          onValidation={isValid =>
+            this.setState(previousState => ({
+              ...previousState,
+              validPercentage: isValid
+            }))
+          }
           keyboardType={'numeric'}
           style={styles.inputStyle}
         />
