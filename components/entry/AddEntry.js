@@ -85,7 +85,7 @@ class AddEntry extends Component {
     //Update Redux
     dispatch(
       addEntry({
-        [key]: { key, ...entry }
+        [key]: { key: key, ...entry }
       })
     );
 

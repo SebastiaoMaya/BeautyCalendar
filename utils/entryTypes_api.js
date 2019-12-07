@@ -22,19 +22,25 @@ function setDummyEntryTypes() {
       displayName: 'Linha',
       max: 50,
       step: 1,
-      type: 'steppers'
+      type: 'steppers',
+      price: 20,
+      percentage: 70
     },
     pedicure: {
       displayName: 'Pedicure',
       max: 50,
       step: 1,
-      type: 'steppers'
+      type: 'steppers',
+      price: 15,
+      percentage: 70
     },
     massagem_relaxamento: {
       displayName: 'Massagem Relaxamento',
       max: 50,
       step: 1,
-      type: 'steppers'
+      type: 'steppers',
+      price: 35,
+      percentage: 70
     }
   };
 

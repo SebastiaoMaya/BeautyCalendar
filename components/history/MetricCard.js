@@ -5,15 +5,28 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { gray } from '../../utils/colors';
+import { gray, green } from '../../utils/colors';
 
 const MetricCard = ({ metrics, entryTypes }) => {
+  let totalPrice = 0;
+  let priceWithPercentage = 0;
+
+  Object.keys(metrics).forEach(metric => {
+    if (metric !== 'key' && metrics[metric]) {
+      totalPrice += metrics[metric] * entryTypes[metric].price;
+      priceWithPercentage +=
+        (metrics[metric] *
+          entryTypes[metric].price *
+          entryTypes[metric].percentage) /
+        100;
+    }
+  });
+
   return (
-    <View>
+    <View style={styles.container}>
       {Object.keys(metrics).map(metric => {
         if (metric !== 'key' && metrics[metric]) {
           const { displayName } = entryTypes[metric];
-
           return (
             <View style={styles.metric} key={metric}>
               <View>
@@ -26,14 +39,37 @@ const MetricCard = ({ metrics, entryTypes }) => {
           );
         }
       })}
+      <View style={styles.totalPriceContainer}>
+        <Text style={styles.totalPrice}>{totalPrice}€</Text>
+        <Text style={styles.priceWithPercentage}>{priceWithPercentage}€</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column'
+  },
   metric: {
     flexDirection: 'row',
     marginTop: 12
+  },
+  totalPriceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingTop: 20
+  },
+  totalPrice: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
+    fontSize: 16,
+    marginRight: 5
+  },
+  priceWithPercentage: {
+    fontSize: 24,
+    color: green
   }
 });
 
