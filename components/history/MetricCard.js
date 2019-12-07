@@ -11,7 +11,7 @@ const MetricCard = ({ metrics, entryTypes }) => {
   return (
     <View>
       {Object.keys(metrics).map(metric => {
-        if (metric !== 'key') {
+        if (metric !== 'key' && metrics[metric]) {
           const { displayName } = entryTypes[metric];
 
           return (

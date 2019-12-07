@@ -2,18 +2,18 @@
  * Copyright 2019, Sebastião Maya, All rights reserved.
  */
 
-import { Ionicons } from '@expo/vector-icons';
 import { Platform } from '@unimodules/core';
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry, submitEntry } from '../../utils/calendar_api';
 import { pink, white } from '../../utils/colors';
 import { timeToString } from '../../utils/helpers';
-import BeautySteppers from '../buttons/BeautySteppers';
 import TextButton from '../buttons/TextButton';
+import ChangeEntryRow from './ChangeEntryRow';
 
 const SubmitBtn = ({ onPress }) => {
   return (
@@ -63,6 +63,18 @@ class AddEntry extends Component {
         [metric]: count < 0 ? 0 : count
       };
     });
+  };
+
+  renderEntryType = ({ item }) => {
+    const value = this.state[item.key];
+    return (
+      <ChangeEntryRow
+        item={item}
+        value={value}
+        decrement={() => this.decrement(item.key)}
+        increment={() => this.increment(item.key)}
+      />
+    );
   };
 
   submit = () => {
@@ -118,10 +130,6 @@ class AddEntry extends Component {
     if (this.props.alreadyLogged) {
       return (
         <View style={styles.center}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-happy' : 'md-happy'}
-            size={100}
-          />
           <Text>You already logged your information for today</Text>
           <TextButton onPress={this.reset} style={{ padding: 10 }}>
             Reset
@@ -130,24 +138,16 @@ class AddEntry extends Component {
       );
     }
 
+    const entryTypesArray = Object.keys(entryTypes).map(key => ({
+      key,
+      ...entryTypes[key]
+    }));
     return (
       <View style={styles.container}>
-        {Object.keys(entryTypes).map(key => {
-          const { ...rest } = entryTypes[key];
-          const value = this.state[key];
-
-          return (
-            <View key={key} style={styles.row}>
-              <Text>{key}</Text>
-              <BeautySteppers
-                value={value}
-                onIncrement={() => this.increment(key)}
-                onDecrement={() => this.decrement(key)}
-                {...rest}
-              />
-            </View>
-          );
-        })}
+        <Text style={styles.activitiesHeader}>Activities</Text>
+        <View style={styles.entriesContainer}>
+          <FlatList data={entryTypesArray} renderItem={this.renderEntryType} />
+        </View>
         <SubmitBtn onPress={this.submit} />
       </View>
     );
@@ -160,10 +160,10 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: white
   },
-  row: {
-    flexDirection: 'row',
+  entriesContainer: {
     flex: 1,
-    alignItems: 'center'
+    paddingTop: 20,
+    paddingBottom: 20
   },
   iosSubmitBtn: {
     backgroundColor: pink,
@@ -195,6 +195,14 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     alignItems: 'center'
+  },
+  entryTypeDisplayName: {
+    fontSize: 16,
+    width: 150,
+    paddingLeft: 20
+  },
+  activitiesHeader: {
+    fontSize: 22
   }
 });
 
