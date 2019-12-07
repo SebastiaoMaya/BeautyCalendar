@@ -12,6 +12,15 @@ export function fetchEntryTypesResults() {
   );
 }
 
+export function submitEntryType({ entryType, key }) {
+  return AsyncStorage.mergeItem(
+    ENTRY_TYPES_STORAGE_KEY,
+    JSON.stringify({
+      [key]: entryType
+    })
+  );
+}
+
 function parseEntryTypesResults(results) {
   return results === null ? setDummyEntryTypes() : JSON.parse(results);
 }

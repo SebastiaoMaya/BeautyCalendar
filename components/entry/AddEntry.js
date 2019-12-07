@@ -2,31 +2,18 @@
  * Copyright 2019, Sebastião Maya, All rights reserved.
  */
 
-import { Platform } from '@unimodules/core';
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { NavigationActions, withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry, submitEntry } from '../../utils/calendar_api';
-import { pink, white } from '../../utils/colors';
+import { white } from '../../utils/colors';
 import { timeToString } from '../../utils/helpers';
+import SubmitButton from '../buttons/SubmitButton';
 import TextButton from '../buttons/TextButton';
 import ChangeEntryRow from './ChangeEntryRow';
-
-const SubmitBtn = ({ onPress }) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={
-        Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn
-      }
-    >
-      <Text style={styles.submitBtnText}>SUBMIT</Text>
-    </TouchableOpacity>
-  );
-};
 
 class AddEntry extends Component {
   state = {};
@@ -147,7 +134,7 @@ class AddEntry extends Component {
         <View style={styles.entriesContainer}>
           <FlatList data={entryTypesArray} renderItem={this.renderEntryType} />
         </View>
-        <SubmitBtn onPress={this.submit} />
+        <SubmitButton onPress={this.submit}> SUBMIT </SubmitButton>
         <TextButton onPress={this.reset} style={{ padding: 10 }}>
           Reset
         </TextButton>
@@ -167,30 +154,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20
   },
-  iosSubmitBtn: {
-    backgroundColor: pink,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
-  },
-  androidSubmitBtn: {
-    backgroundColor: pink,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center'
-  },
   center: {
     flex: 1,
     justifyContent: 'center',
@@ -209,7 +172,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ entryTypes }, { navigation }) => {
-  const { date } = navigation.state.params;
+  let date;
+  if (navigation.state.params) {
+    date = navigation.state.params.date;
+  }
 
   return {
     entryTypes,

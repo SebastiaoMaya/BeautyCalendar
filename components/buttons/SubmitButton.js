@@ -3,16 +3,16 @@
  */
 
 import React from 'react';
-import { Platform, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { lightBlue, white } from '../../utils/colors';
+import { gray, pink, white } from '../../utils/colors';
 
 const SubmitButton = ({ children, onPress, style, disabled, btnStyle }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[
-        Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn,
+        disabled ? styles.disabledIosSubmitBtn : styles.iosSubmitBtn,
         btnStyle
       ]}
       disabled={disabled}
@@ -24,27 +24,24 @@ const SubmitButton = ({ children, onPress, style, disabled, btnStyle }) => {
 
 const styles = StyleSheet.create({
   iosSubmitBtn: {
-    backgroundColor: lightBlue,
+    backgroundColor: pink,
     padding: 10,
     borderRadius: 7,
     height: 45,
     marginLeft: 40,
     marginRight: 40
   },
-  androidSubmitBtn: {
-    backgroundColor: lightBlue,
+  disabledIosSubmitBtn: {
+    backgroundColor: gray,
     padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
+    borderRadius: 7,
     height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center'
+    marginLeft: 40,
+    marginRight: 40
   },
   submitBtnText: {
     color: white,
-    fontSize: 16,
+    fontSize: 22,
     textAlign: 'center'
   }
 });
