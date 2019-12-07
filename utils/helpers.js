@@ -38,3 +38,16 @@ export function getHoursAndMinutesFromString(timeString) {
     minutes: parseInt(splittedTime[1])
   };
 }
+
+export function formatEntriesForAgenda(entries) {
+  const formattedEntries = {};
+  Object.keys(entries).forEach(key => {
+    if (entries[key]) {
+      formattedEntries[key] = [Object.assign({}, entries[key])];
+    } else {
+      formattedEntries[key] = [];
+    }
+  });
+
+  return formattedEntries;
+}

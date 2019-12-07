@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry } from '../../utils/calendar_api';
 import { white } from '../../utils/colors';
-import { getDailyReminderValue, timeToString } from '../../utils/helpers';
 import TextButton from '../buttons/TextButton';
 import MetricCard from '../history/MetricCard';
 
@@ -59,9 +58,7 @@ class EntryDetail extends Component {
   render() {
     const { metrics } = this.props;
 
-    return metrics && metrics.length !== 0
-      ? this.renderEntry(metrics[0])
-      : this.renderEmptyEntry();
+    return metrics ? this.renderEntry(metrics) : this.renderEmptyEntry();
   }
 }
 
@@ -89,14 +86,11 @@ const mapDispatchToProps = (dispatch, { navigation }) => {
     remove: () =>
       dispatch(
         addEntry({
-          [entryId]: timeToString === entryId ? getDailyReminderValue() : []
+          [entryId]: null
         })
       ),
     goBack: () => navigation.goBack()
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EntryDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(EntryDetail);

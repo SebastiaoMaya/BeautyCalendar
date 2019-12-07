@@ -39,15 +39,13 @@ function setDummyData() {
     const strTime = timeToString(time);
     dummyData[strTime] =
       getRandomNumber(3) % 2 === 0
-        ? [
-            {
-              key: strTime,
-              linha: getRandomNumber(50),
-              pedicure: getRandomNumber(50),
-              massagem_relaxamento: getRandomNumber(50)
-            }
-          ]
-        : [];
+        ? {
+            key: strTime,
+            linha: getRandomNumber(50),
+            pedicure: getRandomNumber(50),
+            massagem_relaxamento: getRandomNumber(50)
+          }
+        : null;
   }
 
   AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData));
@@ -63,7 +61,7 @@ function setMissingDates(dates) {
     const strTime = timeToString(time);
 
     if (typeof dates[strTime] === 'undefined') {
-      dates[strTime] = [];
+      dates[strTime] = null;
     }
   }
 

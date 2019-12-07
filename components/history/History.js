@@ -17,7 +17,7 @@ import { receiveEntries } from '../../actions/entries';
 import { receiveEntryTypes } from '../../actions/entryTypes';
 import { fetchDatabaseResults } from '../../utils/api';
 import { white } from '../../utils/colors';
-import { timeToString } from '../../utils/helpers';
+import { formatEntriesForAgenda, timeToString } from '../../utils/helpers';
 import MetricCard from './MetricCard';
 
 class History extends Component {
@@ -81,14 +81,12 @@ class History extends Component {
   render() {
     const { entries } = this.props;
     const { ready } = this.state;
-
     if (!ready) {
       return <AppLoading />;
     }
-
     return (
       <Agenda
-        items={entries}
+        items={formatEntriesForAgenda(entries)}
         renderItem={this.renderItem}
         renderEmptyDate={this.renderEmptyDate}
         rowHasChanged={this.rowHasChanged}
