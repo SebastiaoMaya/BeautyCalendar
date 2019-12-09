@@ -3,10 +3,10 @@
  */
 
 import { combineReducers } from 'redux';
+import activities from './activities';
 import entries from './entries';
-import entryTypes from './entryTypes';
 
 export default combineReducers({
   entries,
-  entryTypes
+  activities
 });

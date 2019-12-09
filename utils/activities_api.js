@@ -4,28 +4,28 @@
 
 import { AsyncStorage } from 'react-native';
 
-export const ENTRY_TYPES_STORAGE_KEY = 'BeautyCalendar:entryTypes';
+export const ACTIVITIES_STORAGE_KEY = 'BeautyCalendar:activities';
 
-export function fetchEntryTypesResults() {
-  return AsyncStorage.getItem(ENTRY_TYPES_STORAGE_KEY).then(
-    parseEntryTypesResults
+export function fetchActivitiesResults() {
+  return AsyncStorage.getItem(ACTIVITIES_STORAGE_KEY).then(
+    parseActivitiesResults
   );
 }
 
-export function submitEntryType({ entryType, key }) {
+export function submitActivity({ activity, key }) {
   return AsyncStorage.mergeItem(
     ENTRY_TYPES_STORAGE_KEY,
     JSON.stringify({
-      [key]: entryType
+      [key]: activity
     })
   );
 }
 
-function parseEntryTypesResults(results) {
-  return results === null ? setDummyEntryTypes() : JSON.parse(results);
+function parseActivitiesResults(results) {
+  return results === null ? setDummyActivities() : JSON.parse(results);
 }
 
-function setDummyEntryTypes() {
+function setDummyActivities() {
   const dummyData = {
     linha: {
       displayName: 'Linha',
@@ -53,7 +53,7 @@ function setDummyEntryTypes() {
     }
   };
 
-  AsyncStorage.setItem(ENTRY_TYPES_STORAGE_KEY, JSON.stringify(dummyData));
+  AsyncStorage.setItem(ACTIVITIES_STORAGE_KEY, JSON.stringify(dummyData));
 
   return dummyData;
 }

@@ -30,9 +30,9 @@ This project lets the user play the "mobile flashcards" on the mobile phone: cre
 }
 </pre>
 
-### EntryType AsyncStorage Structure
+### Activity AsyncStorage Structure
 
-- key: 'BeautyCalendar:entryTypes'
+- key: 'BeautyCalendar:activities'
 
 <pre>
 {

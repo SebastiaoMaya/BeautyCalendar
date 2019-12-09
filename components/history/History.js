@@ -13,8 +13,8 @@ import {
 } from 'react-native';
 import { Agenda } from 'react-native-calendars';
 import { connect } from 'react-redux';
+import { receiveActivities } from '../../actions/activities';
 import { receiveEntries } from '../../actions/entries';
-import { receiveEntryTypes } from '../../actions/entryTypes';
 import { fetchDatabaseResults } from '../../utils/api';
 import { white } from '../../utils/colors';
 import { formatEntriesForAgenda, timeToString } from '../../utils/helpers';
@@ -31,9 +31,9 @@ class History extends Component {
     //clearDatabase();
 
     fetchDatabaseResults()
-      .then(({ entries, entryTypes }) => {
+      .then(({ entries, activities }) => {
         dispatch(receiveEntries(entries));
-        dispatch(receiveEntryTypes(entryTypes));
+        dispatch(receiveActivities(activities));
       })
       .then(() =>
         this.setState(() => ({
@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ entries, entryTypes }) => ({
+const mapStateToProps = ({ entries, activities }) => ({
   entries,
-  entryTypes
+  activities
 });
 
 export default connect(mapStateToProps)(History);

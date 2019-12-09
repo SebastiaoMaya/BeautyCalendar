@@ -7,17 +7,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { gray, green } from '../../utils/colors';
 
-const MetricCard = ({ metrics, entryTypes }) => {
+const MetricCard = ({ metrics, activities }) => {
   let totalPrice = 0;
   let priceWithPercentage = 0;
 
   Object.keys(metrics).forEach(metric => {
     if (metric !== 'key' && metrics[metric]) {
-      totalPrice += metrics[metric] * entryTypes[metric].price;
+      totalPrice += metrics[metric] * activities[metric].price;
       priceWithPercentage +=
         (metrics[metric] *
-          entryTypes[metric].price *
-          entryTypes[metric].percentage) /
+          activities[metric].price *
+          activities[metric].percentage) /
         100;
     }
   });
@@ -26,7 +26,7 @@ const MetricCard = ({ metrics, entryTypes }) => {
     <View style={styles.container}>
       {Object.keys(metrics).map(metric => {
         if (metric !== 'key' && metrics[metric]) {
-          const { displayName } = entryTypes[metric];
+          const { displayName } = activities[metric];
           return (
             <View style={styles.metric} key={metric}>
               <View>
@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ entryTypes }) => ({
-  entryTypes
+const mapStateToProps = ({ activities }) => ({
+  activities
 });
 
 export default connect(mapStateToProps)(MetricCard);

@@ -6,13 +6,13 @@ import React, { Component } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { addEntryType } from '../../actions/entryTypes';
+import { addActivity } from '../../actions/activities';
+import { submitActivity } from '../../utils/activities_api';
 import { pink } from '../../utils/colors';
-import { submitEntryType } from '../../utils/entryTypes_api';
 import SubmitButton from '../buttons/SubmitButton';
 import NumericInput from '../inputs/NumericInput';
 
-class AddEntryType extends Component {
+class AddActivity extends Component {
   state = {
     nameInput: '',
     priceInput: '',
@@ -25,19 +25,19 @@ class AddEntryType extends Component {
   toHome = () => {
     this.props.navigation.dispatch(
       NavigationActions.back({
-        key: 'AddEntryType'
+        key: 'AddActivity'
       })
     );
   };
 
   submit = () => {
-    const { dispatch, entryTypes } = this.props;
+    const { dispatch, activities } = this.props;
 
     const { nameInput, priceInput, percentageInput } = this.state;
 
     //Update Redux
-    const entryTypeId = getEntryTypeIdFromName(nameInput);
-    const entryTypeToAdd = {
+    const activityId = getActivityIdFromName(nameInput);
+    const activityToAdd = {
       displayName: nameInput,
       price: priceInput,
       percentage: percentageInput,
@@ -46,8 +46,8 @@ class AddEntryType extends Component {
       max: 50
     };
     dispatch(
-      addEntryType({
-        [entryTypeId]: entryTypeToAdd
+      addActivity({
+        [activityId]: activityToAdd
       })
     );
 
@@ -63,7 +63,7 @@ class AddEntryType extends Component {
     this.toHome();
 
     //Save to DB
-    submitEntryType({ entryType: entryTypeToAdd, key: entryTypeId });
+    submitActivity({ activity: activityToAdd, key: activityId });
   };
 
   handleTextChange = (text, name) => {
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ entryTypes }) => ({
-  entryTypes
+const mapStateToProps = ({ activities }) => ({
+  activities
 });
 
-export default connect(mapStateToProps)(AddEntryType);
+export default connect(mapStateToProps)(AddActivity);

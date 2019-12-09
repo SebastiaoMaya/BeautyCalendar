@@ -6,7 +6,7 @@ import BeautySteppers from '../buttons/BeautySteppers';
 const ChangeEntryRow = ({ item, decrement, increment, value }) => {
   return (
     <View key={item.key} style={styles.row}>
-      <Text style={styles.entryTypeDisplayName}>{item.displayName}</Text>
+      <Text style={styles.activityDisplayName}>{item.displayName}</Text>
       <BeautySteppers
         value={value}
         onIncrement={increment}
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderColor: pink,
     padding: 20
   },
-  entryTypeDisplayName: {
+  activityDisplayName: {
     fontSize: 16,
     width: 150,
     paddingLeft: 20

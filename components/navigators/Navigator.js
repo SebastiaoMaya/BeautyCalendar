@@ -12,8 +12,8 @@ import {
   createMaterialTopTabNavigator
 } from 'react-navigation-tabs';
 import { pink, white } from '../../utils/colors';
+import AddActivity from '../activity/AddActivity';
 import AddEntry from '../entry/AddEntry';
-import AddEntryType from '../entry/AddEntryType';
 import EntryDetail from '../entry/EntryDetail';
 import History from '../history/History';
 
@@ -43,10 +43,10 @@ const TabNavigator = createPlatformNavigation()(
         )
       }
     },
-    AddEntryType: {
-      screen: AddEntryType,
+    AddActivity: {
+      screen: AddActivity,
       navigationOptions: {
-        tabBarLabel: 'Add Entry Type',
+        tabBarLabel: 'Add Activity',
         tabBarIcon: ({ tintColor }) => (
           <FontAwesome name='plus-square' size={30} color={tintColor} />
         )

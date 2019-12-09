@@ -20,13 +20,13 @@ class AddEntry extends Component {
 
   constructor(props) {
     super(props);
-    const { entryTypes } = props;
-    Object.keys(entryTypes).forEach(entryType => (this.state[entryType] = 0));
+    const { activities } = props;
+    Object.keys(activities).forEach(activity => (this.state[activity] = 0));
   }
 
   increment = metric => {
-    const { entryTypes } = this.props;
-    const { max, step } = entryTypes[metric];
+    const { activities } = this.props;
+    const { max, step } = activities[metric];
 
     this.setState(currentState => {
       const count = currentState[metric] + step;
@@ -39,8 +39,8 @@ class AddEntry extends Component {
   };
 
   decrement = metric => {
-    const { entryTypes } = this.props;
-    const { step } = entryTypes[metric];
+    const { activities } = this.props;
+    const { step } = activities[metric];
 
     this.setState(currentState => {
       const count = currentState[metric] - step;
@@ -52,7 +52,7 @@ class AddEntry extends Component {
     });
   };
 
-  renderEntryType = ({ item }) => {
+  renderActivity = ({ item }) => {
     const value = this.state[item.key];
     return (
       <ChangeEntryRow
@@ -65,7 +65,7 @@ class AddEntry extends Component {
   };
 
   submit = () => {
-    const { dispatch, entryTypes, date } = this.props;
+    const { dispatch, activities, date } = this.props;
 
     const key = date ? date : timeToString();
     const entry = this.state;
@@ -78,7 +78,7 @@ class AddEntry extends Component {
     );
 
     const newState = {};
-    Object.keys(entryTypes).forEach(entryType => (newState[entryType] = 0));
+    Object.keys(activities).forEach(activity => (newState[activity] = 0));
     this.setState(newState);
 
     this.toHome();
@@ -113,11 +113,11 @@ class AddEntry extends Component {
   };
 
   render() {
-    const { entryTypes, date } = this.props;
+    const { activities, date } = this.props;
 
-    const entryTypesArray = Object.keys(entryTypes).map(key => ({
+    const activitiesArray = Object.keys(activities).map(key => ({
       key,
-      ...entryTypes[key]
+      ...activities[key]
     }));
 
     let dateToRecord = date;
@@ -132,7 +132,7 @@ class AddEntry extends Component {
           Activities for {dateToRecord}
         </Text>
         <View style={styles.entriesContainer}>
-          <FlatList data={entryTypesArray} renderItem={this.renderEntryType} />
+          <FlatList data={activitiesArray} renderItem={this.renderActivity} />
         </View>
         <SubmitButton onPress={this.submit}> SUBMIT </SubmitButton>
         <TextButton onPress={this.reset} style={{ padding: 10 }}>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     alignItems: 'center'
   },
-  entryTypeDisplayName: {
+  activityDisplayName: {
     fontSize: 16,
     width: 150,
     paddingLeft: 20
@@ -171,14 +171,14 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ entryTypes }, { navigation }) => {
+const mapStateToProps = ({ activities }, { navigation }) => {
   let date;
   if (navigation.state.params) {
     date = navigation.state.params.date;
   }
 
   return {
-    entryTypes,
+    activities,
     date
   };
 };

@@ -3,14 +3,14 @@
  */
 
 import { AsyncStorage } from 'react-native';
+import { fetchActivitiesResults } from './activities_api';
 import { fetchCalendarResults } from './calendar_api';
-import { fetchEntryTypesResults } from './entryTypes_api';
 
 export function fetchDatabaseResults() {
-  return Promise.all([fetchCalendarResults(), fetchEntryTypesResults()]).then(
-    ([entries, entryTypes]) => ({
+  return Promise.all([fetchCalendarResults(), fetchActivitiesResults()]).then(
+    ([entries, activities]) => ({
       entries,
-      entryTypes
+      activities
     })
   );
 }
