@@ -4,13 +4,13 @@
 
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { addActivity } from '../../actions/activities';
 import { submitActivity } from '../../utils/activities_api';
 import { pink } from '../../utils/colors';
 import SubmitButton from '../buttons/SubmitButton';
 import NumericInput from '../inputs/NumericInput';
+import ValidatedTextInput from '../inputs/ValidatedTextInput';
 
 class AddActivity extends Component {
   state = {
@@ -19,7 +19,7 @@ class AddActivity extends Component {
     percentageInput: '',
     validPrice: false,
     validPercentage: false,
-    validActivityData: false
+    validActivityName: false
   };
 
   toHome = () => {
@@ -55,7 +55,7 @@ class AddActivity extends Component {
       nameInput: '',
       priceInput: '',
       percentageInput: '',
-      validActivityData: false,
+      validActivityName: false,
       validPrice: false,
       validPercentage: false
     });
@@ -67,11 +67,8 @@ class AddActivity extends Component {
   };
 
   handleTextChange = (text, name) => {
-    this.setState(previousState => ({
-      ...previousState,
-      [name]: text,
-      validActivityData:
-        text !== '' && previousState.validPercentage && previousState.validPrice
+    this.setState(() => ({
+      [name]: text
     }));
   };
 
@@ -80,26 +77,32 @@ class AddActivity extends Component {
       nameInput,
       priceInput,
       percentageInput,
-      validActivityData
+      validActivityName,
+      validPrice,
+      validPercentage
     } = this.state;
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
         <Text style={styles.headerText}> Add a new Activity </Text>
-        <TextInput
+        <ValidatedTextInput
           value={nameInput}
           onChangeText={text => this.handleTextChange(text, 'nameInput')}
           placeholder='Enter the activity name'
+          onValidation={isValid =>
+            this.setState(() => ({
+              validActivityName: isValid
+            }))
+          }
           style={styles.inputStyle}
         />
         <NumericInput
           value={priceInput}
           onChangeText={text => this.handleTextChange(text, 'priceInput')}
           placeholder='Enter the price'
-          pattern={['^[1-9]\\d{0,9}(,\\d{0,2})?$']}
+          pattern={'^[1-9]\\d{0,9}(,\\d{0,2})?$'}
           onValidation={isValid =>
-            this.setState(previousState => ({
-              ...previousState,
+            this.setState(() => ({
               validPrice: isValid
             }))
           }
@@ -110,19 +113,19 @@ class AddActivity extends Component {
           value={percentageInput}
           onChangeText={text => this.handleTextChange(text, 'percentageInput')}
           placeholder='Enter the percentage'
-          pattern={[
-            '(^100(\\,0{1,2})?$)|(^([1-9]([0-9])?|0)(\\,[0-9]{1,2})?$)'
-          ]}
+          pattern={'(^100(\\,0{1,2})?$)|(^([1-9]([0-9])?|0)(\\,[0-9]{1,2})?$)'}
           onValidation={isValid =>
-            this.setState(previousState => ({
-              ...previousState,
+            this.setState(() => ({
               validPercentage: isValid
             }))
           }
           keyboardType={'numeric'}
           style={styles.inputStyle}
         />
-        <SubmitButton onPress={this.submit} disabled={!validActivityData}>
+        <SubmitButton
+          onPress={this.submit}
+          disabled={!(validActivityName && validPrice && validPercentage)}
+        >
           SUBMIT
         </SubmitButton>
       </KeyboardAvoidingView>

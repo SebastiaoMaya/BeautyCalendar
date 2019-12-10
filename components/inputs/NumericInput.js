@@ -19,7 +19,6 @@ class NumericInput extends Component {
   onChange(value) {
     const { onChangeText, onValidation } = this.props;
     const isValid = this.handleValidation(value);
-    console.log(isValid);
     onValidation && onValidation(isValid);
     onChangeText && onChangeText(value);
   }
