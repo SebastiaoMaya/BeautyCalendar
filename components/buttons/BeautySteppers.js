@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
     padding: 5,
-    paddingLeft: 15,
-    paddingRight: 15
+    paddingLeft: 10,
+    paddingRight: 10
   },
   metricCounter: {
-    width: 85,
+    width: 65,
     justifyContent: 'center',
     alignItems: 'center'
   }

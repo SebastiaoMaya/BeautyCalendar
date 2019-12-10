@@ -10,9 +10,9 @@ import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry, submitEntry } from '../../utils/calendar_api';
 import { white } from '../../utils/colors';
+import * as Constants from '../../utils/constants';
 import { timeToString } from '../../utils/helpers';
 import SubmitButton from '../buttons/SubmitButton';
-import TextButton from '../buttons/TextButton';
 import ChangeEntryRow from './ChangeEntryRow';
 
 class AddEntry extends Component {
@@ -22,6 +22,17 @@ class AddEntry extends Component {
     super(props);
     const { activities } = props;
     Object.keys(activities).forEach(activity => (this.state[activity] = 0));
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { activities } = props;
+    const newState = {};
+    Object.keys(activities).forEach(activity => {
+      if (!state[activity]) {
+        newState[activity] = 0;
+      }
+    });
+    return { ...state, ...newState };
   }
 
   increment = metric => {
@@ -52,20 +63,8 @@ class AddEntry extends Component {
     });
   };
 
-  renderActivity = ({ item }) => {
-    const value = this.state[item.key];
-    return (
-      <ChangeEntryRow
-        item={item}
-        value={value}
-        decrement={() => this.decrement(item.key)}
-        increment={() => this.increment(item.key)}
-      />
-    );
-  };
-
   submit = () => {
-    const { dispatch, activities, date } = this.props;
+    const { dispatch, activities, date, entries } = this.props;
 
     const key = date ? date : timeToString();
     const entry = this.state;
@@ -112,6 +111,51 @@ class AddEntry extends Component {
     );
   };
 
+  isSubmitDisabled = () => {
+    return Object.keys(this.state).every(key => this.state[key] === 0);
+  };
+
+  renderActivity = ({ item }) => {
+    const value = this.state[item.key];
+    return (
+      <ChangeEntryRow
+        item={item}
+        value={value}
+        decrement={() => this.decrement(item.key)}
+        increment={() => this.increment(item.key)}
+      />
+    );
+  };
+
+  renderActivitiesOrEmptyActivities = (activitiesArray, dateToRecord) => {
+    if (activitiesArray.length !== 0) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.activitiesHeader}>
+            {Constants.ACTIVITIES_FOR + dateToRecord}
+          </Text>
+          <View style={styles.entriesContainer}>
+            <FlatList data={activitiesArray} renderItem={this.renderActivity} />
+          </View>
+          <SubmitButton
+            onPress={this.submit}
+            disabled={this.isSubmitDisabled()}
+          >
+            {Constants.SUBMIT}
+          </SubmitButton>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={[styles.activitiesHeader, styles.center]}>
+            {Constants.ADD_ACTIVITIES_ERROR}
+          </Text>
+        </View>
+      );
+    }
+  };
+
   render() {
     const { activities, date } = this.props;
 
@@ -126,19 +170,9 @@ class AddEntry extends Component {
       dateToRecord = timeToString();
     }
 
-    return (
-      <View style={styles.container}>
-        <Text style={styles.activitiesHeader}>
-          Activities for {dateToRecord}
-        </Text>
-        <View style={styles.entriesContainer}>
-          <FlatList data={activitiesArray} renderItem={this.renderActivity} />
-        </View>
-        <SubmitButton onPress={this.submit}> SUBMIT </SubmitButton>
-        <TextButton onPress={this.reset} style={{ padding: 10 }}>
-          Reset
-        </TextButton>
-      </View>
+    return this.renderActivitiesOrEmptyActivities(
+      activitiesArray,
+      dateToRecord
     );
   }
 }
@@ -162,16 +196,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   activityDisplayName: {
-    fontSize: 16,
-    width: 150,
-    paddingLeft: 20
+    fontSize: 16
   },
   activitiesHeader: {
     fontSize: 22
   }
 });
 
-const mapStateToProps = ({ activities }, { navigation }) => {
+const mapStateToProps = ({ activities, entries }, { navigation }) => {
   let date;
   if (navigation.state.params) {
     date = navigation.state.params.date;
@@ -179,7 +211,8 @@ const mapStateToProps = ({ activities }, { navigation }) => {
 
   return {
     activities,
-    date
+    date,
+    entries
   };
 };
 

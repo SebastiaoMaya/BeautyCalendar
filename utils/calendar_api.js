@@ -3,7 +3,7 @@
  */
 
 import { AsyncStorage } from 'react-native';
-import { getRandomNumber, timeToString } from './helpers';
+import { timeToString } from './helpers';
 
 export const CALENDAR_STORAGE_KEY = 'BeautyCalendar:entries';
 
@@ -30,6 +30,17 @@ export function removeEntry(key) {
   });
 }
 
+function getDummyEntry(strTime) {
+  return getRandomNumber(3) % 2 === 0
+    ? {
+        key: strTime,
+        linha: getRandomNumber(50),
+        pedicure: getRandomNumber(50),
+        massagem_relaxamento: getRandomNumber(50)
+      }
+    : null;
+}
+
 function setDummyData() {
   let dummyData = {};
   const timestamp = Date.now();
@@ -37,15 +48,8 @@ function setDummyData() {
   for (let i = -10; i < 0; i++) {
     const time = timestamp + i * 24 * 60 * 60 * 1000;
     const strTime = timeToString(time);
-    dummyData[strTime] =
-      getRandomNumber(3) % 2 === 0
-        ? {
-            key: strTime,
-            linha: getRandomNumber(50),
-            pedicure: getRandomNumber(50),
-            massagem_relaxamento: getRandomNumber(50)
-          }
-        : null;
+    // dummyData[strTime] = getDummyEntry(strTime);
+    dummyData[strTime] = null;
   }
 
   AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData));

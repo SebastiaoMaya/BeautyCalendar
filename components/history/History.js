@@ -4,6 +4,7 @@
 
 import { AppLoading } from 'expo';
 import React, { Component } from 'react';
+import { IsEqual } from 'react-lodash';
 import {
   Platform,
   StyleSheet,
@@ -17,6 +18,7 @@ import { receiveActivities } from '../../actions/activities';
 import { receiveEntries } from '../../actions/entries';
 import { fetchDatabaseResults } from '../../utils/api';
 import { white } from '../../utils/colors';
+import * as Constants from '../../utils/constants';
 import { formatEntriesForAgenda, timeToString } from '../../utils/helpers';
 import MetricCard from './MetricCard';
 
@@ -43,7 +45,7 @@ class History extends Component {
   }
 
   rowHasChanged = (r1, r2) => {
-    return r1.name !== r2.name;
+    return <IsEqual value={r1} other={r2} />;
   };
 
   renderItem = item => (
@@ -73,7 +75,7 @@ class History extends Component {
           }}
         >
           <Text style={styles.noDataText}>
-            You didn't log any data on this day
+            {Constants.NO_DATA_FOR_THIS_DAY}
           </Text>
         </TouchableOpacity>
       </View>

@@ -51,3 +51,7 @@ export function formatEntriesForAgenda(entries) {
 
   return formattedEntries;
 }
+
+export function getActivityIdFromName(name) {
+  return name.replace(/ /g, '_');
+}

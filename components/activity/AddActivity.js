@@ -4,10 +4,13 @@
 
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { addActivity } from '../../actions/activities';
 import { submitActivity } from '../../utils/activities_api';
 import { pink } from '../../utils/colors';
+import * as Constants from '../../utils/constants';
+import { getActivityIdFromName } from '../../utils/helpers';
 import SubmitButton from '../buttons/SubmitButton';
 import NumericInput from '../inputs/NumericInput';
 import ValidatedTextInput from '../inputs/ValidatedTextInput';
@@ -126,7 +129,7 @@ class AddActivity extends Component {
           onPress={this.submit}
           disabled={!(validActivityName && validPrice && validPercentage)}
         >
-          SUBMIT
+          {Constants.SUBMIT}
         </SubmitButton>
       </KeyboardAvoidingView>
     );

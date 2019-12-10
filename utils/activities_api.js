@@ -14,7 +14,7 @@ export function fetchActivitiesResults() {
 
 export function submitActivity({ activity, key }) {
   return AsyncStorage.mergeItem(
-    ENTRY_TYPES_STORAGE_KEY,
+    ACTIVITIES_STORAGE_KEY,
     JSON.stringify({
       [key]: activity
     })
@@ -22,7 +22,8 @@ export function submitActivity({ activity, key }) {
 }
 
 function parseActivitiesResults(results) {
-  return results === null ? setDummyActivities() : JSON.parse(results);
+  //return results === null ? setDummyActivities() : JSON.parse(results);
+  return JSON.parse(results);
 }
 
 function setDummyActivities() {

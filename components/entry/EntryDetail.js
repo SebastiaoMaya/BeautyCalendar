@@ -3,11 +3,12 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry } from '../../utils/calendar_api';
 import { white } from '../../utils/colors';
+import * as Constants from '../../utils/constants';
 import TextButton from '../buttons/TextButton';
 import MetricCard from '../history/MetricCard';
 
@@ -37,14 +38,17 @@ class EntryDetail extends Component {
   }
 
   render() {
-    const { metrics } = this.props;
+    const { metrics, entryId } = this.props;
 
     if (metrics) {
       return (
         <View style={styles.container}>
-          <MetricCard metrics={metrics} />
+          <Text style={styles.activitiesHeader}>
+            {Constants.ACTIVITIES_FOR + entryId}
+          </Text>
+          <MetricCard style={styles.item} metrics={metrics} />
           <TextButton onPress={this.reset} style={{ margin: 20 }}>
-            Reset
+            {Constants.RESET}
           </TextButton>
         </View>
       );
@@ -56,7 +60,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: white,
-    padding: 45
+    padding: 45,
+    justifyContent: 'flex-start'
+  },
+  item: {
+    backgroundColor: white,
+    borderRadius: Platform.OS === 'ios' ? 16 : 2,
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0,0,0,0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  activitiesHeader: {
+    fontSize: 22
   }
 });
 
