@@ -34,15 +34,6 @@ const TabNavigator = createPlatformNavigation()(
         )
       }
     },
-    AddEntry: {
-      screen: AddEntry,
-      navigationOptions: {
-        tabBarLabel: 'Add Entry',
-        tabBarIcon: ({ tintColor }) => (
-          <FontAwesome name='plus-square' size={30} color={tintColor} />
-        )
-      }
-    },
     AddActivity: {
       screen: AddActivity,
       navigationOptions: {
@@ -83,7 +74,12 @@ const HistoryStackNavigator = createStackNavigator(
         headerTitle: 'Entry Details'
       }
     },
-    AddEntry,
+    AddEntry: {
+      screen: AddEntry,
+      navigationOptions: {
+        headerTitle: 'Add Entry'
+      }
+    },
     TabNavigator
   },
   {

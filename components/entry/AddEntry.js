@@ -64,9 +64,9 @@ class AddEntry extends Component {
   };
 
   submit = () => {
-    const { dispatch, activities, date, entries } = this.props;
+    const { dispatch, activities, navigation } = this.props;
+    const key = navigation.getParam('date', timeToString());
 
-    const key = date ? date : timeToString();
     const entry = this.state;
 
     //Update Redux
@@ -87,8 +87,8 @@ class AddEntry extends Component {
   };
 
   reset = () => {
-    const { dispatch, date } = this.props;
-    const key = date ? date : timeToString();
+    const { dispatch, navigation } = this.props;
+    const key = navigation.getParam('date', timeToString());
 
     //Update Redux
     dispatch(
@@ -131,9 +131,7 @@ class AddEntry extends Component {
     if (activitiesArray.length !== 0) {
       return (
         <View style={styles.container}>
-          <Text style={styles.activitiesHeader}>
-            {Constants.ACTIVITIES_FOR + dateToRecord}
-          </Text>
+          <Text style={styles.activitiesHeader}>{dateToRecord}</Text>
           <View style={styles.entriesContainer}>
             <FlatList data={activitiesArray} renderItem={this.renderActivity} />
           </View>
@@ -157,23 +155,15 @@ class AddEntry extends Component {
   };
 
   render() {
-    const { activities, date } = this.props;
+    const { activities, navigation } = this.props;
+    const date = navigation.getParam('date', timeToString());
 
     const activitiesArray = Object.keys(activities).map(key => ({
       key,
       ...activities[key]
     }));
 
-    let dateToRecord = date;
-
-    if (!date) {
-      dateToRecord = timeToString();
-    }
-
-    return this.renderActivitiesOrEmptyActivities(
-      activitiesArray,
-      dateToRecord
-    );
+    return this.renderActivitiesOrEmptyActivities(activitiesArray, date);
   }
 }
 
@@ -203,15 +193,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ activities, entries }, { navigation }) => {
-  let date;
-  if (navigation.state.params) {
-    date = navigation.state.params.date;
-  }
-
+const mapStateToProps = ({ activities, entries }) => {
   return {
     activities,
-    date,
     entries
   };
 };

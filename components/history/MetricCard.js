@@ -29,8 +29,8 @@ const MetricCard = ({ metrics, activities, style }) => {
         if (metric !== 'key' && metrics[metric]) {
           const { displayName } = activities[metric];
           return (
-            <View style={styles.metricContainer}>
-              <View style={styles.metricVal} key={metric}>
+            <View style={styles.metricContainer} key={metric}>
+              <View style={styles.metricVal}>
                 <Text style={{ fontSize: 20 }}>{displayName}</Text>
                 <Text style={{ fontSize: 16, color: gray }}>
                   {metrics[metric]}
