@@ -2,7 +2,7 @@
  * Copyright 2019, Sebastião Maya, All rights reserved.
  */
 
-import { NOTIFICATION_BODY } from './constants';
+import { MONTHS, NOTIFICATION_BODY } from './constants';
 
 export function timeToString(time = Date.now()) {
   const date = new Date(time);
@@ -60,6 +60,10 @@ export function getCurrentYear() {
   return timeToString().slice(0, 4);
 }
 
+export function getCurrentMonth() {
+  return timeToString().slice(5, 7);
+}
+
 export function calculatePriceAndPercentageOnDay(entry, activities) {
   let totalPrice = 0;
   let priceWithPercentage = 0;
@@ -81,7 +85,7 @@ export function calculatePriceAndPercentageOnDay(entry, activities) {
   };
 }
 
-function calculateEarningOnMonth(earningsPerDay) {
+function calculateEarningPerMonth(earningsPerDay) {
   let earningsPerMonth = {};
   const currentYear = getCurrentYear();
 
@@ -90,10 +94,10 @@ function calculateEarningOnMonth(earningsPerDay) {
     let month = date.slice(5, 7);
 
     if (year === currentYear) {
-      if (earningsPerMonth[month]) {
-        earningsPerMonth[month] += earningOnDay[date].priceWithPercentage;
+      if (earningsPerMonth[month] || earningsPerMonth[month] === 0) {
+        earningsPerMonth[month] += earningsPerDay[date].priceWithPercentage;
       } else {
-        earningsPerMonth[month] = 0;
+        earningsPerMonth[month] = earningsPerDay[date].priceWithPercentage;
       }
     }
   });
@@ -102,9 +106,37 @@ function calculateEarningOnMonth(earningsPerDay) {
 }
 
 export function calculateEarningsPerYear(entries, activities) {
-  const priceAndPercentagePerDay = Object.keys(entries).map(entry => ({
-    [entry]: calculatePriceAndPercentageOnDay(entry, activities)
-  }));
+  const priceAndPercentagePerDay = {};
+  Object.keys(entries).forEach(key => {
+    if (entries[key]) {
+      priceAndPercentagePerDay[
+        entries[key].key
+      ] = calculatePriceAndPercentageOnDay(entries[key], activities);
+    }
+  });
 
-  return calculateEarningOnMonth(priceAndPercentagePerDay);
+  return calculateEarningPerMonth(priceAndPercentagePerDay);
+}
+
+export function getActivityChartSortedData(entries, activities) {
+  const earningsPerYear = calculateEarningsPerYear(entries, activities);
+
+  const sortedData = {
+    months: [],
+    earnings: [],
+    currentEarnings: earningsPerYear[getCurrentMonth()]
+  };
+
+  Object.keys(earningsPerYear)
+    .sort()
+    .forEach(month => {
+      sortedData.months.push(MONTHS[month]);
+      sortedData.earnings.push(earningsPerYear[month]);
+    });
+
+  return sortedData;
+}
+
+export function formatEarningsToMaxSixEntries(array) {
+  return array.length > 6 ? array.slice(array.length - 6, array.length) : array;
 }
