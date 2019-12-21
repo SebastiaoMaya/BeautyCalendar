@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { NavigationActions, withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { addEntry } from '../../actions/entries';
 import { removeEntry, submitEntry } from '../../utils/calendar_api';
@@ -104,11 +104,7 @@ class AddEntry extends Component {
   };
 
   toHome = () => {
-    this.props.navigation.dispatch(
-      NavigationActions.back({
-        key: 'AddEntry'
-      })
-    );
+    this.props.navigation.navigate('History');
   };
 
   isSubmitDisabled = () => {

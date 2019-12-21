@@ -7,21 +7,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { gray, green } from '../../utils/colors';
 import * as Constants from '../../utils/constants';
+import { calculatePriceAndPercentageOnDay } from '../../utils/helpers';
 
 const MetricCard = ({ metrics, activities, style }) => {
-  let totalPrice = 0;
-  let priceWithPercentage = 0;
-
-  Object.keys(metrics).forEach(metric => {
-    if (metric !== 'key' && metrics[metric]) {
-      totalPrice += metrics[metric] * activities[metric].price;
-      priceWithPercentage +=
-        (metrics[metric] *
-          activities[metric].price *
-          activities[metric].percentage) /
-        100;
-    }
-  });
+  const { totalPrice, priceWithPercentage } = calculatePriceAndPercentageOnDay(
+    metrics,
+    activities
+  );
 
   return (
     <View style={style || styles.container}>

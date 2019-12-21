@@ -12,6 +12,7 @@ import {
   createMaterialTopTabNavigator
 } from 'react-navigation-tabs';
 import { pink, white } from '../../utils/colors';
+import ActivityChart from '../activity/ActivityChart';
 import AddActivity from '../activity/AddActivity';
 import AddEntry from '../entry/AddEntry';
 import EntryDetail from '../entry/EntryDetail';
@@ -40,6 +41,15 @@ const TabNavigator = createPlatformNavigation()(
         tabBarLabel: 'Add Activity',
         tabBarIcon: ({ tintColor }) => (
           <FontAwesome name='plus-square' size={30} color={tintColor} />
+        )
+      }
+    },
+    ActivityChart: {
+      screen: ActivityChart,
+      navigationOptions: {
+        tabBarLabel: 'Activity Chart',
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name='ios-analytics' size={30} color={tintColor} />
         )
       }
     }
