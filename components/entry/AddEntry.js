@@ -2,7 +2,7 @@
  * Copyright 2019, Sebastião Maya, All rights reserved.
  */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { withNavigation } from 'react-navigation';
@@ -15,7 +15,7 @@ import { timeToString } from '../../utils/helpers';
 import SubmitButton from '../buttons/SubmitButton';
 import ChangeEntryRow from './ChangeEntryRow';
 
-class AddEntry extends Component {
+class AddEntry extends PureComponent {
   state = {};
 
   constructor(props) {

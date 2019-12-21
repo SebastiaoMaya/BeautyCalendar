@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { TextInput } from 'react-native';
 
-class ValidatedTextInput extends Component {
+class ValidatedTextInput extends PureComponent {
   handleValidation(value) {
     return value !== '';
   }

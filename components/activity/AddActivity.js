@@ -2,7 +2,7 @@
  * Copyright 2019, Sebastião Maya, All rights reserved.
  */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import SubmitButton from '../buttons/SubmitButton';
 import NumericInput from '../inputs/NumericInput';
 import ValidatedTextInput from '../inputs/ValidatedTextInput';
 
-class AddActivity extends Component {
+class AddActivity extends PureComponent {
   state = {
     nameInput: '',
     priceInput: '',

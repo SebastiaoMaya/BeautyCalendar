@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { TextInput } from 'react-native';
 
-class NumericInput extends Component {
+class NumericInput extends PureComponent {
   handleValidation(value) {
     const { pattern } = this.props;
     if (!pattern) return true;

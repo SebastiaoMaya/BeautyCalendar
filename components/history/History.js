@@ -3,7 +3,7 @@
  */
 
 import { AppLoading } from 'expo';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { IsEqual } from 'react-lodash';
 import {
   Platform,
@@ -22,7 +22,7 @@ import * as Constants from '../../utils/constants';
 import { formatEntriesForAgenda, timeToString } from '../../utils/helpers';
 import MetricCard from './MetricCard';
 
-class History extends Component {
+class History extends PureComponent {
   state = {
     ready: false
   };
