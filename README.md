@@ -1,6 +1,6 @@
 # BeautyCalendar
 
-This project lets the user play the "mobile flashcards" on the mobile phone: create new tests and test his/her knowledge
+This project helps beauticians tracking their work and how much they have earned per month
 
 ## How to install the project
 
@@ -25,8 +25,11 @@ This project lets the user play the "mobile flashcards" on the mobile phone: cre
 
 <pre>
 {
-  'timestamp': {},
-  'timestamp2': {}
+  'timestamp': {
+    "activity_id": number of times the activity was done,
+    "key": 'timestamp',
+  },
+  'timestamp2': { ... }
 }
 </pre>
 
@@ -36,7 +39,14 @@ This project lets the user play the "mobile flashcards" on the mobile phone: cre
 
 <pre>
 {
-  'id': {},
+  'id': {
+      "displayName": "Massagem Terapeutica",
+      "max": 50,
+      "percentage": "70",
+      "price": "35",
+      "step": 1,
+      "type": "steppers",
+  },
 }
 </pre>
 
