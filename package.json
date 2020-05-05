@@ -1,4 +1,5 @@
 {
+  "name": "BeautyCalendar",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -10,10 +11,10 @@
   "dependencies": {
     "expo": "^35.0.0",
     "prop-types": "^15.7.2",
-    "react": "16.8.3",
+    "react": "16.11.0",
     "react-dom": "16.8.3",
     "react-lodash": "^0.1.2",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react-native": "0.62.2",
     "react-native-calendars": "^1.212.0",
     "react-native-chart-kit": "^4.1.0",
     "react-native-gesture-handler": "^1.5.0",
